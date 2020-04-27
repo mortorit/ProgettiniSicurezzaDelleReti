@@ -1,0 +1,30 @@
+
+Public Function PowerModnSM(base As Variant, power As Variant, n As Variant) As Integer
+Dim powerBinary() As Integer, numOfBits As Integer, temp As Integer, result As Integer, i As Integer
+numOfBits = 0
+base = Int(CDec(base))
+n = Int(CDec(n))
+power = Int(CDec(power))
+
+Do While power <> 0
+        numOfBits = numOfBits + 1
+        ReDim Preserve powerBinary(numOfBits)
+        powerBinary(numOfBits) = power Mod 2
+        power = Int(power / 2)
+    Loop
+
+result = 1
+temp = base
+
+For i = 1 To numOfBits
+
+    If powerBinary(i) = 1 Then
+        result = result * temp
+        result = result Mod n
+    End If
+    temp = temp * temp
+    temp = temp Mod n
+Next i
+
+ PowerModnSM = result
+End Function
