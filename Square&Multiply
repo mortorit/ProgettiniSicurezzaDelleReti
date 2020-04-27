@@ -1,10 +1,10 @@
 
-Public Function PowerModnSM(base As Variant, power As Variant, n As Variant) As Integer
-Dim powerBinary() As Integer, numOfBits As Integer, temp As Integer, result As Integer, i As Integer
+Public Function PowerModnSM(base As Variant, power As Variant, n As Variant) As LongLong
+Dim powerBinary() As Integer, numOfBits As Integer, temp As LongLong, result As LongLong, i As Integer
 numOfBits = 0
-base = Int(CDec(base))
-n = Int(CDec(n))
-power = Int(CDec(power))
+base = CLngLng(CDec(base))
+n = CLngLng(CDec(n))
+power = CLngLng(CDec(power))
 
 Do While power <> 0
         numOfBits = numOfBits + 1
