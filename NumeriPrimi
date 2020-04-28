@@ -1,0 +1,72 @@
+Private Sub PrimeNumbers_Click()
+Dim n As Long, primes() As Long, numberOfPrimes As Long, k As Long, s As Boolean, i As Long, numOfPseudoPrimes As Long, pseudoPrimes() As Long, max As Variant, sequence() As Long, numSequence As Long
+ActiveSheet.Columns(1).ClearContents
+ActiveSheet.Columns(2).ClearContents
+ActiveSheet.Columns(3).ClearContents
+ActiveSheet.Columns(4).ClearContents
+ActiveSheet.Columns(5).ClearContents
+ActiveSheet.Columns(6).ClearContents
+numSequence = 0
+max = InputBox("Insert the upperBound")
+max = CLng(CDec(max))
+numOfPseudoPrimes = 0
+s = False
+numberOfPrimes = 2
+ReDim primes(numberOfPrimes - 1)
+primes(0) = 2
+primes(1) = 3
+n = 0
+k = 1
+Do While True
+      If s = False Then
+            n = 6 * k - 1
+        Else:
+            n = 6 * k + 1
+            k = k + 1
+        End If
+      If n > max Then Exit Do
+      numSequence = numSequence + 1
+      ReDim Preserve sequence(numSequence - 1)
+      sequence(numSequence - 1) = n
+      s = Not s
+      If PowerModnSM(2, n - 1, n) = 1 Then
+          For i = 0 To (numberOfPrimes - 1)
+              If (n Mod (primes(i))) = 0 Then Exit For
+          Next i
+          If i > (numberOfPrimes - 1) Then
+                numberOfPrimes = numberOfPrimes + 1
+                ReDim Preserve primes(numberOfPrimes - 1)
+                primes(numberOfPrimes - 1) = n
+          Else: numOfPseudoPrimes = numOfPseudoPrimes + 1
+                  ReDim Preserve pseudoPrimes(numOfPseudoPrimes - 1)
+                  pseudoPrimes(numOfPseudoPrimes - 1) = n
+          End If
+      End If
+Loop
+
+Dim Destination As Range
+Range("C1").Value = "Sequence Analyzed"
+Set Destination = Range("C2")
+Set Destination = Destination.Resize(UBound(sequence) + 1, 1)
+Destination.Value = Application.Transpose(sequence)
+
+Range("E1").Value = "Prime Numbers Found"
+Set Destination = Range("E2")
+Set Destination = Destination.Resize(UBound(primes) + 1, 1)
+Destination.Value = Application.Transpose(primes)
+
+If numOfPseudoPrimes > 0 Then
+    Range("F1").Value = "PseudoPrime Numbers Found"
+    Set Destination = Range("F2")
+    Set Destination = Destination.Resize(UBound(pseudoPrimes) + 1, 1)
+    Destination.Value = Application.Transpose(pseudoPrimes)
+End If
+
+Range("A1").Value = "Results:"
+Range("A3").Value = "Number of Prime Numbers < " & CStr(max) & " = " & CStr(numberOfPrimes)
+Range("A5").Value = "Number of Pseudo-Prime Numbers < " & CStr(max) & " = " & CStr(numOfPseudoPrimes)
+Range("A7").Value = "Legend:"
+Range("A8").Value = "Green Sequence Numbers: Primes"
+Range("A9").Value = "Blue Sequence Numbers: Pseudo-Primes"
+
+End Sub
