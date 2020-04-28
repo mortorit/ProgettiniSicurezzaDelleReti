@@ -1,0 +1,92 @@
+Private Sub EuclideEsteso_Click()
+Dim num1 As Long, num2 As Long, temp As Long, x(2) As Long, y(2) As Long, q As Long, k As Long, r As Long, m As Long, n As Long
+ActiveSheet.Columns(1).ClearContents
+ActiveSheet.Columns(2).ClearContents
+ActiveSheet.Columns(3).ClearContents
+ActiveSheet.Columns(4).ClearContents
+ActiveSheet.Columns(5).ClearContents
+ActiveSheet.Columns(6).ClearContents
+ActiveSheet.Columns(7).ClearContents
+ActiveSheet.Columns(8).ClearContents
+ActiveSheet.Range("J3:L5").ClearContents
+k = 0
+x(0) = 0
+x(1) = 1
+y(0) = 1
+y(1) = 0
+num1 = InputBox("Insert the first number")
+num1 = CLng(CDec(num1))
+num2 = InputBox("Insert the second number")
+num2 = CLng(CDec(num2))
+If num1 < 0 Or num2 < 0 Then
+        MsgBox "enter numbers greater than 0"
+        Exit Sub
+End If
+
+If num1 > num2 Then
+    temp = num1
+    num1 = num2
+    num2 = temp
+End If
+m = num1
+n = num2
+Range("A1").Value = "k"
+Range("C1").Value = "n"
+Range("D1").Value = "q*m"
+Range("E1").Value = "r"
+Range("G1").Value = "x"
+Range("H1").Value = "y"
+Range("G2").Value = "0"
+Range("G3").Value = "1"
+Range("H2").Value = "1"
+Range("H3").Value = "0"
+If num1 = 0 Then
+        r = num2
+Else
+    r = m
+    Do While True
+        q = CLng(Int(n / m))
+        temp = n Mod m
+        If temp = 0 Then
+            Exit Do
+        End If
+        r = temp
+        x(2) = -q * x(1) + x(0)
+        y(2) = -q * y(1) + y(0)
+        Cells(k + 2, 1).Value = k
+        Cells(k + 2, 3).Value = n & " = "
+        Cells(k + 2, 4).Value = q & "*" & m & " + "
+        Cells(k + 2, 5).Value = r
+        Cells(k + 4, 7).Value = x(2)
+        Cells(k + 4, 8).Value = y(2)
+        n = m
+        m = temp
+        k = k + 1
+        x(0) = x(1)
+        x(1) = x(2)
+        y(0) = y(1)
+        y(1) = y(2)
+    Loop
+    Cells(k + 2, 1).Value = k
+    Cells(k + 2, 3).Value = n & " = "
+    Cells(k + 2, 4).Value = q & "*" & m & " + "
+    Cells(k + 2, 5).Value = temp
+    Cells(3, 10).Value = "GCD(" & num1 & "," & num2 & ")  = "
+    Cells(3, 11).Value = r
+    Cells(4, 10).Value = "Inverse of " & num1 & " Mod " & num2 & " = "
+    If r = 1 Then
+        Cells(4, 11).Value = x(2)
+        If (x(2) < 0) Then
+        posInverse = x(2)
+        Do While posInverse < 0
+        posInverse = posInverse + num2
+        Loop
+        Cells(4, 12).Value = " = " & posInverse
+        End If
+    Else: Cells(4, 11).Value = "Not Exists"
+    End If
+    Cells(5, 10).Value = r & " = "
+    Cells(5, 11).Value = x(2) & "*" & num1 & " + " & y(2) & "*" & num2
+End If
+
+End Sub
