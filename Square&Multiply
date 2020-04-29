@@ -1,10 +1,10 @@
 
-Public Function PowerModnSM(base As Variant, power As Variant, n As Variant) As LongLong
+Public Function PowerModnSM(base As Variant, power As Variant, N As Variant) As Long
 Dim powerBinary() As Integer, numOfBits As Integer, temp As LongLong, result As LongLong, i As Integer
 numOfBits = 0
-base = CLngLng(CDec(base))
-n = CLngLng(CDec(n))
-power = CLngLng(CDec(power))
+base = CLng(CDec(base))
+N = CLng(CDec(N))
+power = CLng(CDec(power))
 
 Do While power <> 0
         numOfBits = numOfBits + 1
@@ -20,11 +20,11 @@ For i = 1 To numOfBits
 
     If powerBinary(i) = 1 Then
         result = result * temp
-        result = result Mod n
+        result = result Mod N
     End If
     temp = temp * temp
-    temp = temp Mod n
+    temp = temp Mod N
 Next i
 
- PowerModnSM = result
+ PowerModnSM = CLng(result)
 End Function
